@@ -20,7 +20,7 @@ namespace NearestVehiclePositions
 
             List<VehiclesPosition> nearestVehicleList = new List<VehiclesPosition>();
 
-            VehiclesPosition vehiclePosition = new VehiclesPosition();
+            VehiclesPosition vehiclePosition = default;
             double distPow = 0;
 
             Stopwatch stopwatchLoad = new Stopwatch();
@@ -36,18 +36,13 @@ namespace NearestVehiclePositions
                     {
                         while (reader.PeekChar() > -1)
                         {
-                            var vehicle = new VehiclesPosition();
-
-                            vehicle.PositionId = reader.ReadInt32();
-
-                            char[] chars = reader.ReadChars(10);
-
-                            double latitude = reader.ReadSingle();
-                            double longitude = reader.ReadSingle();
-
-                            vehicle.Position = new GeoPosition(latitude, longitude);
-
-                            vehicle.RecordedTimeUTC = reader.ReadUInt64();
+                            var vehicle = new VehiclesPosition
+                            (
+                                reader.ReadInt32(),
+                                reader.ReadChars(10).ToString(),
+                                new GeoPosition(reader.ReadSingle(), reader.ReadSingle()),
+                                reader.ReadUInt64()
+                            );
 
                             vehicleList.Add(vehicle);
                         }
@@ -64,16 +59,18 @@ namespace NearestVehiclePositions
                 foreach (var position in GetPositions())
                 {
                     foreach (var vehicle in vehicleList)
-                    { 
+                    {
                         double latDif = (position.Latitude - vehicle.Position.Latitude);
                         double latPow = latDif * latDif;
 
                         double lonDif = (position.Longitude - vehicle.Position.Longitude);
                         double lonPow = lonDif * lonDif;
 
-                        if (distPow == 0 || (latPow + lonPow) < distPow)
+                        double distDiff = latPow + lonPow;
+                      
+                        if (distPow == 0 || (distDiff) < distPow)
                         {
-                            distPow = latPow + lonPow;
+                            distPow = distDiff;
                             vehiclePosition = vehicle;
                         }
                     }
@@ -106,22 +103,19 @@ namespace NearestVehiclePositions
 
         static List<GeoPosition> GetPositions()
         {
-            List<GeoPosition> geoPositions = new List<GeoPosition>();
-
-            geoPositions.Add(new GeoPosition(34.544909, -102.100843));
-            geoPositions.Add(new GeoPosition(32.345544, -99.123124));
-
-            geoPositions.Add(new GeoPosition(33.234235, -99.123124));
-            geoPositions.Add(new GeoPosition(35.195739, -95.348899));
-
-            geoPositions.Add(new GeoPosition(31.895839, -97.789573));
-            geoPositions.Add(new GeoPosition(32.895839, -101.789573));
-
-            geoPositions.Add(new GeoPosition(34.115839, -100.225732));
-            geoPositions.Add(new GeoPosition(32.335839, -99.992232));
-
-            geoPositions.Add(new GeoPosition(33.535339, -94.792232));
-            geoPositions.Add(new GeoPosition(32.234235, -100.222222));
+            List<GeoPosition> geoPositions = new List<GeoPosition>()
+            {
+                new GeoPosition(34.544909, -102.100843),
+                new GeoPosition(32.345544, -99.123124),
+                new GeoPosition(33.234235, -99.123124),
+                new GeoPosition(35.195739, -95.348899),
+                new GeoPosition(31.895839, -97.789573),
+                new GeoPosition(32.895839, -101.789573),
+                new GeoPosition(34.115839, -100.225732),
+                new GeoPosition(32.335839, -99.992232),
+                new GeoPosition(33.535339, -94.792232),
+                new GeoPosition(32.234235, -100.222222)
+            };
 
             return geoPositions;
         }
