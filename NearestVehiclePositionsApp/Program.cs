@@ -82,7 +82,7 @@ namespace NearestVehiclePositions
 
                 stopwatchCalc.Stop();
                 Console.WriteLine("Calc ten positions time: {0} ms", stopwatchCalc.ElapsedMilliseconds);
-                Console.WriteLine("Total cala time: {0} ms", stopwatchLoad.ElapsedMilliseconds + stopwatchCalc.ElapsedMilliseconds);
+                Console.WriteLine("Total calc time: {0} ms", stopwatchLoad.ElapsedMilliseconds + stopwatchCalc.ElapsedMilliseconds);
                 Console.WriteLine();
 
                 //print results
