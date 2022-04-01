@@ -12,7 +12,7 @@ namespace NearestVehiclePositions
 {
     internal class Program
     {
-        const string fileName = @"C:\Projects\FindTheBestDealApp\VehiclePositions.dat";
+        const string fileName = @"C:\Projects\NearestVehiclePositionsApp\NearestVehiclePositionsApp\VehiclePositions.dat";
 
         static void Main(string[] args)
         {
