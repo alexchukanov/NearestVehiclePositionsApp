@@ -64,10 +64,7 @@ namespace NearestVehiclePositions
                 foreach (var position in GetPositions())
                 {
                     foreach (var vehicle in vehicleList)
-                    {
-                        //double latPow = Math.Pow(position.Latitude - vehicle.Position.Latitude, 2);
-                        //double lonPow = Math.Pow(position.Longitude - vehicle.Position.Longitude, 2);
-
+                    { 
                         double latDif = (position.Latitude - vehicle.Position.Latitude);
                         double latPow = latDif * latDif;
 

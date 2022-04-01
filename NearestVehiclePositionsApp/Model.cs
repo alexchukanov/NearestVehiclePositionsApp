@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace NearestVehiclePositions.Model
-{  
-    
+{   
     public class VehiclesPosition
     {
         public int PositionId { get; set; }
