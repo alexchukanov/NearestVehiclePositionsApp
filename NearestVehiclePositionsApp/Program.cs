@@ -20,7 +20,7 @@ namespace NearestVehiclePositions
 
             List<VehiclesPosition> nearestVehicleList = new List<VehiclesPosition>();
 
-            VehiclesPosition vehiclePosition = null;
+            VehiclesPosition vehiclePosition = new VehiclesPosition();
             double distPow = 0;
 
             Stopwatch stopwatchLoad = new Stopwatch();
